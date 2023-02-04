@@ -5,6 +5,9 @@ import 'package:foode_app/view/pages/auth/splash_page.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/auth_controller.dart';
+import 'controller/chat_controller.dart';
+import 'controller/home_controller.dart';
+import 'controller/product_controller.dart';
 import 'controller/user_controller.dart';
 
 Future<void> main() async {
@@ -21,7 +24,10 @@ class MyApp extends StatelessWidget {
     return  MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthController()),
-        ChangeNotifierProvider(create: (context) => UserController())
+        ChangeNotifierProvider(create: (context) => UserController()),
+        ChangeNotifierProvider(create: (context) => ProductController()),
+        ChangeNotifierProvider(create: (context) => HomeController()),
+        ChangeNotifierProvider(create: (context) => ChatController()),
       ],
       child: ScreenUtilInit(
           designSize: const Size(428, 926),
