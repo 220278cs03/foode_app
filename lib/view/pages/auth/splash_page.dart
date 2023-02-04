@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foode_app/view/pages/auth/sign_up_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../controller/local_store/local_store.dart';
+import '../home/home_page.dart';
 import 'onboarding_page.dart';
 
 class Splash extends StatefulWidget {
@@ -14,11 +17,24 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_) => const OnBoarding()));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      String? docId = await LocalStore.getDocId();
+      if (docId == null) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const SignUp()),
+                (route) => false);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const HomePage()),
+                (route) => false);
+      }
     });
+
+    super.initState();
   }
 
   @override

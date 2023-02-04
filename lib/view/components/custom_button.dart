@@ -17,7 +17,6 @@ class _CustomButtonState extends State<CustomButton> {
   Widget build(BuildContext context) {
     return Container(
         height: 55.r,
-        margin: EdgeInsets.only(bottom: 48),
         decoration: BoxDecoration(
             gradient: widget.on ? Style.primaryPinkGradient : Style.halfPinkGradient,
             borderRadius: BorderRadius.all(Radius.circular(32.r))

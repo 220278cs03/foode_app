@@ -33,7 +33,8 @@ class OnBoarding extends StatelessWidget {
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (_) => const SignUp()));
                   },
-                )
+                ),
+                48.verticalSpace
               ],
             ),
           ),

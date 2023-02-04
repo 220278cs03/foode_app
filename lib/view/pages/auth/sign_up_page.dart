@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foode_app/controller/auth_controller.dart';
+import 'package:foode_app/view/pages/auth/sign_in_page.dart';
+import 'package:foode_app/view/pages/auth/verification_page.dart';
+import 'package:foode_app/view/pages/auth/widgets/custom_checkBox.dart';
+import 'package:foode_app/view/pages/auth/widgets/custom_error.dart';
+import 'package:foode_app/view/pages/auth/widgets/custom_logo.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/custom_button.dart';
@@ -19,20 +26,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   late TextEditingController controller;
 
-  bool isCheckBox = false;
-
-  // bool isHide = false; //visibility
-  //
-  // bool isEmailIncorrect = false; // access to enter
-  // bool isPasswordIncorrect = false;
-  //
-  // bool isEmailEmpty = false; // to check either if it's empty
-  // bool isPasswordEmpty = false;
-  //
-  // bool isPasswordValidate = false; // to check is there 8 elements
-  //
-  // String email = 'hello@gmail.com'; // Valid email & password
-  // String password = '12345678';
+  bool isPhoneEmpty = false;
 
   @override
   void initState() {
@@ -54,190 +48,114 @@ class _SignUpState extends State<SignUp> {
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           children: [
-            68.verticalSpace,
-            SizedBox(
-              height: 200,
-              width: 210,
-              child: Image(
-                image: AssetImage('assets/image/splash_screen_logo.png'),
-                fit: BoxFit.cover,
-              ),
+            CustomLogo(
+              text: 'Sign up for free',
             ),
-            18.verticalSpace,
-            Text(
-              "Sign up for free",
-              style: Style.textStyleRegular(size: 23.sp),
-            ),
-            32.verticalSpace,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextFormField(
-                  hintText: "Email or Phone Number",
-                  labelText: "Email",
-                ),
-                // isEmailEmpty
-                //     ? Container(
-                //   margin: EdgeInsets.only(top:8),
-                //   height: 33.r,
-                //   decoration: BoxDecoration(
-                //       color: Color(0xffEBEEF2),
-                //       borderRadius:
-                //       BorderRadius.all(Radius.circular(8.r))),
-                //   child: Row(
-                //     children: [
-                //       Container(
-                //         height: 16.r,
-                //         width: 16.r,
-                //         decoration: BoxDecoration(
-                //             color: Color(0xff394452),
-                //             shape: BoxShape.circle),
-                //         child: Center(
-                //             child: Text(
-                //               "!",
-                //               style: TextStyle(color: Colors.white),
-                //             )),
-                //       ),
-                //       5.horizontalSpace,
-                //       Text(
-                //         "Enter your email",
-                //         style: GoogleFonts.sourceSansPro(
-                //             fontWeight: FontWeight.w400,
-                //             fontSize: 14,
-                //             color: Color(0xff394452)),
-                //       )
-                //     ],
-                //   ),
-                // )
-                //     : SizedBox.shrink(),
-                // isEmailIncorrect
-                //     ? Container(
-                //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                //     margin: EdgeInsets.only(top:8),
-                //     decoration: BoxDecoration(
-                //         color: Color(0xffEBEEF2),
-                //         borderRadius:
-                //         BorderRadius.all(Radius.circular(8.r))),
-                //     child: Row(
-                //         children: [
-                //           Container(
-                //             height: 16.r,
-                //             width: 16.r,
-                //             decoration: BoxDecoration(
-                //                 color: Color(0xff394452),
-                //                 shape: BoxShape.circle),
-                //             child: Center(
-                //                 child: Text(
-                //                   "!",
-                //                   style: TextStyle(color: Colors.white),
-                //                 )),
-                //           ),
-                //           5.horizontalSpace,
-                //           Text("Invalid email",
-                //               style: GoogleFonts.sourceSansPro(
-                //                   fontWeight: FontWeight.w400,
-                //                   fontSize: 14,
-                //                   color: Color(0xff394452)))
-                //         ])) : SizedBox.shrink(),
-                20.verticalSpace,
-                CustomTextFormField(
-                  hintText: "Password",
-                  labelText: "Password",
-                ),
-                // isPasswordEmpty
-                //     ? Container(
-                //   height: 33.r,
-                //   decoration: BoxDecoration(
-                //       color: Color(0xffEBEEF2),
-                //       borderRadius:
-                //       BorderRadius.all(Radius.circular(8.r))),
-                //   child: Row(
-                //     children: [
-                //       Container(
-                //         height: 16.r,
-                //         width: 16.r,
-                //         decoration: BoxDecoration(
-                //             color: Color(0xff394452),
-                //             shape: BoxShape.circle),
-                //         child: Center(
-                //             child: Text("!",
-                //                 style: TextStyle(color: Colors.white))),
-                //       ),
-                //       5.horizontalSpace,
-                //       isPasswordIncorrect
-                //           ? Text("Invalid password",
-                //           style: GoogleFonts.sourceSansPro(
-                //               fontWeight: FontWeight.w400,
-                //               fontSize: 14,
-                //               color: Color(0xff394452)))
-                //           : Text(
-                //         "Enter your password",
-                //         style: GoogleFonts.sourceSansPro(
-                //             fontWeight: FontWeight.w400,
-                //             fontSize: 14,
-                //             color: Color(0xff394452)),
-                //       )
-                //     ],
-                //   ),
-                // )
-                //     : SizedBox.shrink(),
-                22.verticalSpace,
                 Padding(
-                  padding: const EdgeInsets.only(left: 24.0),
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          isCheckBox = !isCheckBox;
-                          setState(() {});
-                        },
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          width: 16.w,
-                          height: 16.h,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4.r)),
-                              color: isCheckBox
-                                  ? Style.whiteColor
-                                  : Style.primaryPink,
-                              border: Border.all(color: Style.primaryPink)),
-                          child: Icon(
-                            Icons.done,
-                            size: 14,
-                            color: Style.whiteColor,
-                          ),
-                        ),
-                      ),
-                      12.horizontalSpace,
-                      Text(
-                        "Remember me",
-                        style: Style.textStyleRegular(size: 14),
-                      )
-                    ],
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: "Phone Number", style: Style.textStyleRegular()),
+                    TextSpan(
+                        text: "*",
+                        style: Style.textStyleRegular(
+                            textColor: Style.redColor, size: 14.sp))
+                  ])),
                 ),
+                8.verticalSpace,
+                TextFormField(
+                  cursorColor: Style.blackColor,
+                  controller: controller,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Style.whiteColor,
+                    border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(100).r),
+                        borderSide:
+                            const BorderSide(color: Style.borderGreyColor)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(100).r),
+                        borderSide:
+                            const BorderSide(color: Style.borderGreyColor)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(100).r),
+                        borderSide:
+                            const BorderSide(color: Style.borderGreyColor)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(100).r),
+                        borderSide:
+                            const BorderSide(color: Style.borderGreyColor)),
+                    hintText: "Phone Number",
+                    hintStyle:
+                        Style.textStyleRegular(textColor: Style.textGreyColor),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                  ),
+                  onChanged: (s) {
+                    isPhoneEmpty = false;
+                    if (s == "") isPhoneEmpty = true;
+                    print(s);
+                    print(isPhoneEmpty);
+                    setState(() {});
+                  },
+                ),
+                isPhoneEmpty
+                    ? const CustomError(
+                        text: 'Enter your Phone Number',
+                      )
+                    : const SizedBox.shrink(),
+                22.verticalSpace,
+                CustomCheckBox(),
                 20.verticalSpace,
                 InkWell(
-                    child: CustomButton(
-                  text: "Sign up",
-                  on: false,
-                )),
+                  child: CustomButton(
+                    text: "Sign up",
+                    on: !isPhoneEmpty,
+                  ),
+                  onTap: () {
+                    if (controller.text.isEmpty) {
+                      isPhoneEmpty = true;
+                      setState(() {});
+                    }
+                    else{
+                      context.read<AuthController>().sendSms(controller.text, () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const VerifyPage()));
+                      });
+                    }
+                  },
+                ),
               ],
             ),
+            48.verticalSpace,
             Text("or continue with", style: Style.textStyleThin()),
             26.verticalSpace,
-            CustomSignInButton(),
+            const CustomSignInButton(),
             32.verticalSpace,
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "Already have an account?",
-                  style: Style.textStyleThin(textColor: Style.darkTextGrey)),
-              TextSpan(
-                  text: " Sign in",
-                  style: Style.textStyleRegular(textColor: Style.primaryPink))
-            ])),
+            GestureDetector(
+              child: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: "Already have an account?",
+                    style: Style.textStyleThin(textColor: Style.darkTextGrey)),
+                TextSpan(
+                    text: " Sign in",
+                    style: Style.textStyleRegular(textColor: Style.primaryPink))
+              ])),
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const SignInPage()));
+              },
+            ),
           ],
         ),
       ),
