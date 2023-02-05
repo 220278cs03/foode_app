@@ -54,6 +54,7 @@ dependencies:
   cached_network_image: ^3.2.3
   video_player: ^2.5.1
   icons_plus: ^3.0.0
+  proste_indexed_stack: ^0.2.4
 
 dev_dependencies:
   flutter_test:

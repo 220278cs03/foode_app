@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../controller/local_store/local_store.dart';
 import '../home/home_page.dart';
+import '../home/main_page.dart';
 import 'onboarding_page.dart';
 
 class Splash extends StatefulWidget {
@@ -29,7 +30,7 @@ class _SplashState extends State<Splash> {
         // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_) => const HomePage()),
+            MaterialPageRoute(builder: (_) => const MainPage()),
                 (route) => false);
       }
     });

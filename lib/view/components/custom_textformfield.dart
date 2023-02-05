@@ -53,6 +53,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             controller: widget.controller,
             onChanged: widget.onChange,
             decoration: InputDecoration(
+              suffixIcon: widget.suffixIcon,
               filled: true,
               fillColor: Style.whiteColor,
               border: OutlineInputBorder(
