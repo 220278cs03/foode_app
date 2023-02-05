@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foode_app/view/components/custom_textformfield.dart';
+import 'package:foode_app/view/pages/home/product_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 image: AssetImage('assets/image/splash_screen_background.png'),
                 fit: BoxFit.cover)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 34),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 34),
           child: Column(
             children: [
               Row(
@@ -324,6 +325,31 @@ class _HomePageState extends State<HomePage> {
                               );
                             }),
                       ),
+                      32.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Popular Menu",
+                            style: GoogleFonts.sourceSansPro(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                          ),
+                          GestureDetector(
+                            child: Text(
+                              "See all",
+                              style: GoogleFonts.sourceSansPro(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xffF43F5E)),
+                            ),
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (_)=> ProductListPage()));
+                            },
+                          ),
+                        ],
+                      ),
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
@@ -331,7 +357,7 @@ class _HomePageState extends State<HomePage> {
                           context.watch<HomeController>().listOfProduct.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              margin: EdgeInsets.symmetric(vertical: 16),
+                              margin: EdgeInsets.symmetric(vertical: 12),
                               padding: EdgeInsets.only(left: 12, right: 32, top: 12, bottom: 12),
                               width: double.infinity,
                               decoration: BoxDecoration(

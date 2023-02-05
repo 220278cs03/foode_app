@@ -6,7 +6,7 @@ import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'account_page.dart';
 import 'add_product_page.dart';
 import 'home_page.dart';
-import 'message_page.dart';
+import 'chats_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -22,8 +22,8 @@ class _MainPageState extends State<MainPage> {
 
   List<IndexedStackChild> listOfPage = [
     IndexedStackChild(child: const HomePage()),
-    IndexedStackChild(child: const ProductPage()),
-    IndexedStackChild(child: const MessagePage()),
+    IndexedStackChild(child: const AddProductPage()),
+    IndexedStackChild(child: const ChatsPage()),
     IndexedStackChild(child: const AccountPage()),
   ];
 
